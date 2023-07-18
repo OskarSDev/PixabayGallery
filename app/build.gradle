@@ -1,18 +1,20 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
     namespace 'com.osdev.pixabaygallery'
-    compileSdk 33
+    compileSdk toolVersions.android.compileSdk
 
     defaultConfig {
         applicationId "com.osdev.pixabaygallery"
-        minSdk 23
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        minSdk toolVersions.android.minSdk
+        targetSdk toolVersions.android.targetSdk
+        versionCode toolVersions.android.versionCode
+        versionName toolVersions.android.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,20 +26,41 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.8'
     }
 }
 
 dependencies {
+    implementation project(':persistence')
+    implementation "androidx.core:core-ktx:$libVersions.core_ktx"
+    implementation "androidx.appcompat:appcompat:$libVersions.androidx_appcompat"
+    implementation "com.google.android.material:material:$libVersions.android_matrial"
+    implementation "androidx.activity:activity-compose:$libVersions.activity_compose"
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.compose.ui:ui:$libVersions.compose"
+    implementation "androidx.compose.ui:ui-graphics:$libVersions.compose"
+    implementation "androidx.compose.ui:ui-tooling-preview:$libVersions.compose"
+    implementation "androidx.compose.runtime:runtime-livedata:$libVersions.compose"
+    implementation "androidx.compose.material3:material3:$libVersions.compose_material3"
+    implementation "androidx.navigation:navigation-compose:$libVersions.compose_navigation"
+
+    implementation("com.google.dagger:hilt-android:$libVersions.hilt")
+    kapt("com.google.dagger:hilt-android-compiler:$libVersions.hilt")
+    implementation("androidx.hilt:hilt-navigation-compose:$libVersions.hilt_navigation")
+
+    implementation "com.github.bumptech.glide:compose:$libVersions.glide_compose"
+
+    testImplementation "junit:junit:$testLibVersions.j_unit"
+    androidTestImplementation "androidx.test.ext:junit:$testLibVersions.androidx_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$testLibVersions.esspresso"
 }
