@@ -1,5 +1,6 @@
 package com.osdev.pixabaygallery.ui.views
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,9 +24,16 @@ import com.osdev.persistence.domain.tagsAsHashTags
 @Composable
 fun PhotoCell(
     modifier: Modifier,
-    photo: Photo) {
+    photo: Photo,
+    onClick: (Photo) -> Unit
+) {
     Column(
-        modifier = modifier.padding().wrapContentHeight(),
+        modifier = modifier
+            .padding()
+            .wrapContentHeight()
+            .clickable {
+                onClick(photo)
+            },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

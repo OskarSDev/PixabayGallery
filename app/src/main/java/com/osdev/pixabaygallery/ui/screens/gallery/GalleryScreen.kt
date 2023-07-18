@@ -1,4 +1,4 @@
-package com.osdev.pixabaygallery.ui.screens
+package com.osdev.pixabaygallery.ui.screens.gallery
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -9,21 +9,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.osdev.persistence.domain.Photo
+import com.osdev.pixabaygallery.ui.dialogs.PhotoDetailsDialog
 import com.osdev.pixabaygallery.ui.views.GalleryGridView
 import com.osdev.pixabaygallery.ui.views.SearchView
 
 @Composable
-fun GalleryScreen(viewModel: GalleryViewModel = hiltViewModel()) {
+fun GalleryScreen(
+    navController: NavController,
+    viewModel: GalleryViewModel = hiltViewModel()
+) {
     GalleryContent(
         query = viewModel.searchQueryLiveData.observeAsState("").value,
-        onSearchClick = viewModel::onSearchClick,
         photos = viewModel.photoLiveData.observeAsState(emptyList()).value,
+        isNextPageAvailable = viewModel.isNextPageAvailableLiveData.observeAsState(true).value,
+        onSearchClick = viewModel::onSearchClick,
         getNextPage = viewModel::getNextPage,
-        isNextPageAvailable = viewModel.isNextPageAvailableLiveData.observeAsState(true).value
+        onPhotoClicked = viewModel::onPhotoClicked
     )
+    if (viewModel.photoDetailDialogLiveData.observeAsState().value != null) {
+        PhotoDetailsDialog(
+            onDismiss = viewModel::hidePhotoDetailDialog,
+            onAccept = { viewModel.openPhotoDetailsScreen(navController) }
+        )
+    }
 }
-
 
 @Composable
 private fun GalleryContent(
@@ -31,7 +42,8 @@ private fun GalleryContent(
     onSearchClick: (String) -> Unit,
     photos: List<Photo>,
     getNextPage: () -> Unit,
-    isNextPageAvailable: Boolean
+    isNextPageAvailable: Boolean,
+    onPhotoClicked: (Photo) -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,7 +59,8 @@ private fun GalleryContent(
             onLastItemVisible = {
                 getNextPage()
             },
-            isNextPageAvailable = isNextPageAvailable
+            isNextPageAvailable = isNextPageAvailable,
+            onPhotoClicked = onPhotoClicked
         )
     }
 }
@@ -60,6 +73,7 @@ fun GalleryScreenPreview() {
         onSearchClick = {},
         photos = emptyList(),
         getNextPage = {},
-        isNextPageAvailable = false
+        isNextPageAvailable = false,
+        onPhotoClicked = {}
     )
 }

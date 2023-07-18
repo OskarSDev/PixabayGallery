@@ -1,6 +1,5 @@
 package com.osdev.pixabaygallery.ui.views
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.osdev.persistence.domain.Photo
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GalleryGridView(
     photos: List<Photo>,
     onLastItemVisible: () -> Unit,
-    isNextPageAvailable: Boolean
+    isNextPageAvailable: Boolean,
+    onPhotoClicked:(Photo) -> Unit
 ) {
     val listState = rememberLazyStaggeredGridState()
     LazyVerticalStaggeredGrid(
@@ -33,7 +32,8 @@ fun GalleryGridView(
             itemsIndexed(photos) { index, item ->
                 PhotoCell(
                     modifier = Modifier,
-                    photo = item
+                    photo = item,
+                    onClick = onPhotoClicked
                 )
             }
             if (isNextPageAvailable) {

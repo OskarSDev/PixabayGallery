@@ -4,7 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.osdev.pixabaygallery.ui.screens.GalleryScreen
+import com.osdev.pixabaygallery.ui.screens.details.PhotoDetailsScreen
+import com.osdev.pixabaygallery.ui.screens.gallery.GalleryScreen
 
 @Composable
 fun PixabayGalleryGraph(navController: NavHostController) {
@@ -13,7 +14,10 @@ fun PixabayGalleryGraph(navController: NavHostController) {
         startDestination = PixabayGalleryRoute.GalleryScreen.name,
     ) {
         composable(PixabayGalleryRoute.GalleryScreen.name) {
-            GalleryScreen()
+            GalleryScreen(navController)
+        }
+        composable(PixabayGalleryRoute.PhotoDetailsScreen.name) {
+            PhotoDetailsScreen()
         }
     }
 }

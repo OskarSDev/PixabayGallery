@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">PixabayGallery</string>
     <string name="search">Search</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="dialog_photo_details_title">Photo Details</string>
+    <string name="dialog_photo_details_text">Do you want to see photo details?</string>
 </resources>
