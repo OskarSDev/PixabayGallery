@@ -18,7 +18,9 @@ fun GalleryScreen(viewModel: GalleryViewModel = hiltViewModel()) {
     GalleryContent(
         query = viewModel.searchQueryLiveData.observeAsState("").value,
         onSearchClick = viewModel::onSearchClick,
-        photos = viewModel.photoLiveData.observeAsState(emptyList()).value
+        photos = viewModel.photoLiveData.observeAsState(emptyList()).value,
+        getNextPage = viewModel::getNextPage,
+        isNextPageAvailable = viewModel.isNextPageAvailableLiveData.observeAsState(true).value
     )
 }
 
@@ -27,7 +29,9 @@ fun GalleryScreen(viewModel: GalleryViewModel = hiltViewModel()) {
 private fun GalleryContent(
     query: String,
     onSearchClick: (String) -> Unit,
-    photos: List<Photo>
+    photos: List<Photo>,
+    getNextPage: () -> Unit,
+    isNextPageAvailable: Boolean
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -38,7 +42,13 @@ private fun GalleryContent(
             query = query,
             onSearchClick = onSearchClick
         )
-        GalleryGridView(photos)
+        GalleryGridView(
+            photos = photos,
+            onLastItemVisible = {
+                getNextPage()
+            },
+            isNextPageAvailable = isNextPageAvailable
+        )
     }
 }
 
@@ -48,6 +58,8 @@ fun GalleryScreenPreview() {
     GalleryContent(
         query = "fruits",
         onSearchClick = {},
-        photos = emptyList()
+        photos = emptyList(),
+        getNextPage = {},
+        isNextPageAvailable = false
     )
 }

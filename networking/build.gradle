@@ -10,9 +10,13 @@ android {
 }
 
 dependencies {
-    implementation project(":networking")
     implementation "com.google.dagger:hilt-android:$libVersions.hilt"
     kapt "com.google.dagger:hilt-android-compiler:$libVersions.hilt"
+    implementation "com.squareup.retrofit2:retrofit:$libVersions.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$libVersions.retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$libVersions.okhttp"
+    implementation "com.google.code.gson:gson:$libVersions.gson"
+
     testImplementation "junit:junit:$testLibVersions.j_unit"
     androidTestImplementation "androidx.test.ext:junit:$testLibVersions.androidx_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$testLibVersions.esspresso"

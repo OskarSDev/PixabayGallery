@@ -26,7 +26,10 @@ ext {
             compose_navigation : "2.6.0",
             hilt : "2.44",
             hilt_navigation: "1.0.0",
-            glide_compose: "1.0.0-alpha.1"
+            glide_compose: "1.0.0-alpha.1",
+            retrofit : "2.9.0",
+            okhttp : "4.10.0",
+            gson: "2.10.1"
     ]
     testLibVersions = [
             j_unit: "4.13.2",
