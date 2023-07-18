@@ -1,7 +1,7 @@
 package com.osdev.persistence.domain
 
 data class Photo(
-    val id: String,
+    val id: Long,
     val userName: String,
     val url: String,
     val tags: List<String>
@@ -10,7 +10,7 @@ data class Photo(
 fun Photo.tagsAsHashTags(): String {
     val stringBuilder = StringBuilder()
     tags.forEach {
-        stringBuilder.append("#$it ")
+        stringBuilder.append("#${it.trim()} ")
     }
     return stringBuilder.toString()
 }

@@ -54,8 +54,8 @@ dependencies {
     implementation "androidx.compose.material3:material3:$libVersions.compose_material3"
     implementation "androidx.navigation:navigation-compose:$libVersions.compose_navigation"
 
-    implementation("com.google.dagger:hilt-android:$libVersions.hilt")
-    kapt("com.google.dagger:hilt-android-compiler:$libVersions.hilt")
+    implementation "com.google.dagger:hilt-android:$libVersions.hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$libVersions.hilt"
     implementation("androidx.hilt:hilt-navigation-compose:$libVersions.hilt_navigation")
 
     implementation "com.github.bumptech.glide:compose:$libVersions.glide_compose"
