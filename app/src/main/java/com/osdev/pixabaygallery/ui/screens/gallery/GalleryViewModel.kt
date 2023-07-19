@@ -14,7 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-const val INITIAL_QUERY = "drift car"
+const val INITIAL_QUERY = "fruits"
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
@@ -49,7 +49,7 @@ class GalleryViewModel @Inject constructor(
                         handleResponse(this.data.photos)
                         totalPhotosForQuery = this.data.totalPhotos
                     }.whenError {
-                        //todo handle error
+                        photosMutableLiveData.value = ScreenState.Error(this.exception)
                     }
             }
         }

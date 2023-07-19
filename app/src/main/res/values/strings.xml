@@ -10,4 +10,8 @@
 
     <string name="screen_empty_state_title">No results</string>
     <string name="screen_empty_state_text">Oops! We searched far and wide, but alas, no results were found.</string>
+
+    <string name="screen_error_state_title">Oops! Something went wrong</string>
+    
+    <string name="default_error_text">An unknown error has occurred.</string>
 </resources>
