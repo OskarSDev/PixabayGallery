@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.osdev.pixabaygallery.R
 
 @Composable
 fun PhotoCounterInfoView(
@@ -25,4 +27,13 @@ fun PhotoCounterInfoView(
         Image(painter = painterResource(id = iconResId), contentDescription = null)
         Text(text = "$count")
     }
+}
+
+@Preview
+@Composable
+fun PhotoCounterInfoViewPreview() {
+    PhotoCounterInfoView(
+        10,
+        R.drawable.ic_comment
+    )
 }

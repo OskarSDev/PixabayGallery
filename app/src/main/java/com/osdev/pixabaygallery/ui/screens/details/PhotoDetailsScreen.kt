@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -33,6 +34,7 @@ import com.osdev.pixabaygallery.ui.views.EmptyStateScreen
 import com.osdev.pixabaygallery.ui.views.ErrorStateScreen
 import com.osdev.pixabaygallery.ui.views.PhotoCounterInfoView
 import com.osdev.pixabaygallery.utils.ScreenState
+import java.lang.Exception
 
 @Composable
 fun PhotoDetailsScreen(viewModel: PhotoDetailsViewModel = hiltViewModel()) {
@@ -107,4 +109,45 @@ fun PhotoDetailsContent(
             EmptyStateScreen()
         }
     }
+}
+
+@Preview
+@Composable
+fun PhotoDetailsContentPreviewLoadingState() {
+    PhotoDetailsContent(
+        screenState = ScreenState.Loading
+    )
+}
+
+@Preview
+@Composable
+fun PhotoDetailsContentPreviewErrorState() {
+    PhotoDetailsContent(
+        screenState = ScreenState.Error(Exception("Error"))
+    )
+}
+
+@Preview
+@Composable
+fun PhotoDetailsContentPreviewEmptyState() {
+    PhotoDetailsContent(
+        screenState = ScreenState.EmptyState
+    )
+}
+
+@Preview
+@Composable
+fun PhotoDetailsContentPreview() {
+    PhotoDetailsContent(
+        screenState = ScreenState.Content(
+            PhotoDetails(
+                fullSizePhotoUrl = "",
+                userName = "User Name",
+                tags = listOf("tag1", "tag2"),
+                numberOfLikes = 10,
+                numberOfdDownloads = 11,
+                numberOfComments = 12
+            )
+        )
+    )
 }

@@ -19,6 +19,7 @@ import com.osdev.pixabaygallery.ui.views.ErrorStateScreen
 import com.osdev.pixabaygallery.ui.views.GalleryGridView
 import com.osdev.pixabaygallery.ui.views.SearchView
 import com.osdev.pixabaygallery.utils.ScreenState
+import java.lang.Exception
 
 @Composable
 fun GalleryScreen(
@@ -93,6 +94,32 @@ fun GalleryScreenPreview() {
         query = "fruits",
         onSearchClick = {},
         screenState = ScreenState.Content(emptyList()),
+        getNextPage = {},
+        isNextPageAvailable = false,
+        onPhotoClicked = {}
+    )
+}
+
+@Preview
+@Composable
+fun GalleryScreenEmptyStatePreview() {
+    GalleryContent(
+        query = "fruits",
+        onSearchClick = {},
+        screenState = ScreenState.EmptyState,
+        getNextPage = {},
+        isNextPageAvailable = false,
+        onPhotoClicked = {}
+    )
+}
+
+@Preview
+@Composable
+fun GalleryScreenErrorStatePreview() {
+    GalleryContent(
+        query = "fruits",
+        onSearchClick = {},
+        screenState = ScreenState.Error(Exception("Error")),
         getNextPage = {},
         isNextPageAvailable = false,
         onPhotoClicked = {}
