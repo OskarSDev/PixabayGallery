@@ -18,7 +18,7 @@ fun GalleryGridView(
     photos: List<Photo>,
     onLastItemVisible: () -> Unit,
     isNextPageAvailable: Boolean,
-    onPhotoClicked:(Photo) -> Unit
+    onPhotoClicked: (Photo) -> Unit
 ) {
     val listState = rememberLazyStaggeredGridState()
     LazyVerticalStaggeredGrid(
@@ -39,7 +39,7 @@ fun GalleryGridView(
             if (isNextPageAvailable) {
                 item(span = StaggeredGridItemSpan.FullLine) {
                     CircularProgressOnList()
-                    if(photos.isNotEmpty()) {
+                    if (photos.isNotEmpty()) {
                         onLastItemVisible()
                     }
                 }

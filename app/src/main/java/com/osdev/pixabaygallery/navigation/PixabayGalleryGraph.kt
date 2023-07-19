@@ -1,8 +1,8 @@
 package com.osdev.pixabaygallery.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.osdev.pixabaygallery.ui.screens.details.PhotoDetailsScreen
 import com.osdev.pixabaygallery.ui.screens.gallery.GalleryScreen

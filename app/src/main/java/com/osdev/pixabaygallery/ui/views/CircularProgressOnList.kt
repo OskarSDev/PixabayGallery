@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CircularProgressOnList(){
+fun CircularProgressOnList() {
     Box {
         CircularProgressIndicator(
             modifier = Modifier
@@ -24,6 +24,6 @@ fun CircularProgressOnList(){
 
 @Preview
 @Composable
-fun CircularProgressOnListPreview(){
+fun CircularProgressOnListPreview() {
     CircularProgressOnList()
 }

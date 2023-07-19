@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun CircularProgressScreen(){
+fun CircularProgressScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
         CircularProgressIndicator(
             modifier = Modifier.align(Alignment.Center)
@@ -19,6 +19,6 @@ fun CircularProgressScreen(){
 
 @Preview
 @Composable
-fun CircularProgressScreenPreview(){
+fun CircularProgressScreenPreview() {
     CircularProgressScreen()
 }

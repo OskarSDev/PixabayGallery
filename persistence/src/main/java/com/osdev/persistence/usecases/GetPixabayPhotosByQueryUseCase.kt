@@ -1,12 +1,11 @@
 package com.osdev.persistence.usecases
 
 import com.osdev.networking.PixabayRepository
-import dagger.Reusable
-import javax.inject.Inject
 import com.osdev.persistence.Result
 import com.osdev.persistence.domain.PaginatedPhotoList
 import com.osdev.persistence.mappers.mapToPhotosList
-import java.lang.Exception
+import dagger.Reusable
+import javax.inject.Inject
 
 @Reusable
 class GetPixabayPhotosByQueryUseCase @Inject constructor(

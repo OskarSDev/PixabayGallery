@@ -6,7 +6,6 @@ import com.osdev.persistence.domain.PhotoDetails
 import com.osdev.persistence.exceptions.MapperException
 import com.osdev.persistence.mappers.mapToPhotoDetails
 import dagger.Reusable
-import java.lang.Exception
 import javax.inject.Inject
 
 @Reusable

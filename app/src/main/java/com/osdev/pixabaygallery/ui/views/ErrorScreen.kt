@@ -21,7 +21,7 @@ import com.osdev.pixabaygallery.R
 @Composable
 fun ErrorStateScreen(
     errorText: String,
-){
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()

@@ -9,8 +9,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.osdev.pixabaygallery.ui.AppTheme
 import com.osdev.pixabaygallery.navigation.PixabayGalleryGraph
+import com.osdev.pixabaygallery.ui.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

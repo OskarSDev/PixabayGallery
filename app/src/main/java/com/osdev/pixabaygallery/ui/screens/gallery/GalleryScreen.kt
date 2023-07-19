@@ -19,7 +19,6 @@ import com.osdev.pixabaygallery.ui.views.ErrorStateScreen
 import com.osdev.pixabaygallery.ui.views.GalleryGridView
 import com.osdev.pixabaygallery.ui.views.SearchView
 import com.osdev.pixabaygallery.utils.ScreenState
-import java.lang.Exception
 
 @Composable
 fun GalleryScreen(
