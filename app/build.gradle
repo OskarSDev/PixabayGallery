@@ -50,6 +50,7 @@ dependencies {
     implementation "androidx.compose.ui:ui:$libVersions.compose"
     implementation "androidx.compose.ui:ui-graphics:$libVersions.compose"
     implementation "androidx.compose.ui:ui-tooling-preview:$libVersions.compose"
+    debugImplementation "androidx.compose.ui:ui-tooling:$libVersions.compose"
     implementation "androidx.compose.runtime:runtime-livedata:$libVersions.compose"
     implementation "androidx.compose.material3:material3:$libVersions.compose_material3"
     implementation "androidx.navigation:navigation-compose:$libVersions.compose_navigation"

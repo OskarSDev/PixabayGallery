@@ -7,10 +7,4 @@ data class Photo(
     val tags: List<String>
 )
 
-fun Photo.tagsAsHashTags(): String {
-    val stringBuilder = StringBuilder()
-    tags.forEach {
-        stringBuilder.append("#${it.trim()} ")
-    }
-    return stringBuilder.toString()
-}
+
