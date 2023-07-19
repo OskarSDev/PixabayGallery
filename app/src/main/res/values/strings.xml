@@ -7,4 +7,7 @@
 
     <string name="dialog_photo_details_title">Photo Details</string>
     <string name="dialog_photo_details_text">Do you want to see photo details?</string>
+
+    <string name="screen_empty_state_title">No results</string>
+    <string name="screen_empty_state_text">Oops! We searched far and wide, but alas, no results were found.</string>
 </resources>

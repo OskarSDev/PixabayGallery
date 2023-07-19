@@ -8,6 +8,7 @@ import com.osdev.persistence.domain.Photo
 import com.osdev.persistence.usecases.CheckIfNextPageIsAvailableUseCase
 import com.osdev.persistence.usecases.GetPixabayPhotosByQueryUseCase
 import com.osdev.pixabaygallery.navigation.PixabayScreenName.PHOTO_DETAILS
+import com.osdev.pixabaygallery.utils.ScreenState
 import com.osdev.pixabaygallery.utils.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class GalleryViewModel @Inject constructor(
     private val searchQueryMutableLiveData = MutableLiveData(INITIAL_QUERY)
     val searchQueryLiveData = searchQueryMutableLiveData.asLiveData()
 
-    private val photosMutableLiveData = MutableLiveData<List<Photo>>()
+    private val photosMutableLiveData = MutableLiveData<ScreenState<List<Photo>>>()
     val photoLiveData = photosMutableLiveData.asLiveData()
 
     private val isNextPageAvailableMutableLiveData = MutableLiveData<Boolean>()
@@ -56,19 +57,20 @@ class GalleryViewModel @Inject constructor(
 
     private fun handleResponse(photosList: List<Photo>) {
         if (photosList.isEmpty()) {
-            //todo handle empty list
+            photosMutableLiveData.value = ScreenState.EmptyState
         } else {
             postNewPhotos(photosList)
         }
     }
 
     private fun postNewPhotos(newPhotos: List<Photo>) {
-        val mutablePhotosList = photosMutableLiveData.value?.toMutableList()
+        val mutablePhotosList =
+            (photosMutableLiveData.value as? ScreenState.Content)?.content?.toMutableList()
         if (mutablePhotosList != null) {
             mutablePhotosList.addAll(newPhotos)
-            photosMutableLiveData.value = mutablePhotosList
+            photosMutableLiveData.value = ScreenState.Content(mutablePhotosList)
         } else {
-            photosMutableLiveData.value = newPhotos
+            photosMutableLiveData.value = ScreenState.Content(newPhotos)
         }
     }
 
@@ -81,7 +83,7 @@ class GalleryViewModel @Inject constructor(
     private fun resetSearchData() {
         page = 1
         totalPhotosForQuery = 0
-        photosMutableLiveData.value = emptyList()
+        photosMutableLiveData.value = ScreenState.Content(emptyList())
     }
 
     fun getNextPage() {

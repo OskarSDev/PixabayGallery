@@ -6,7 +6,8 @@ import retrofit2.Response
 import javax.inject.Inject
 
 interface PixabayRepository {
-    suspend fun getPhotosByQuery(query: String,  page: Int): Result<PhotosListResponse>
+    suspend fun getPhotosByQuery(query: String, page: Int): Result<PhotosListResponse>
+    suspend fun getPhotoById(photoId: Int): Result<PhotosListResponse>
 }
 
 class PixabayRepositoryImpl @Inject constructor(
@@ -14,13 +15,19 @@ class PixabayRepositoryImpl @Inject constructor(
 ) : PixabayRepository {
 
     override suspend fun getPhotosByQuery(query: String, page: Int): Result<PhotosListResponse> {
-        val response = pixabayService.getPhotos(query, page)
-        val responseBody = response.body()
-        return if (response.isSuccessful && responseBody != null) {
-            Result.success(responseBody)
-        } else {
-            Result.failure(RemoteIOException(response.code(), response.message()))
-        }
+        return pixabayService.getPhotos(query, page).mapToResults()
     }
 
+    override suspend fun getPhotoById(photoId: Int): Result<PhotosListResponse> {
+        return pixabayService.getPhotoById(photoId).mapToResults()
+    }
+}
+
+fun <T> Response<T>.mapToResults(): Result<T> {
+    val responseBody = body()
+    return if (isSuccessful && responseBody != null) {
+        Result.success(responseBody)
+    } else {
+        Result.failure(RemoteIOException(code(), message()))
+    }
 }

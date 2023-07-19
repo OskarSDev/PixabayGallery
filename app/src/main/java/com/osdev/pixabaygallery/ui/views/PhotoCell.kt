@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.osdev.persistence.domain.Photo
-import com.osdev.persistence.domain.tagsAsHashTags
+import com.osdev.persistence.tagsAsHashTags
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -52,7 +52,7 @@ fun PhotoCell(
         )
         Text(
             style = MaterialTheme.typography.titleSmall,
-            text = photo.tagsAsHashTags()
+            text = photo.tags.tagsAsHashTags()
         )
     }
 

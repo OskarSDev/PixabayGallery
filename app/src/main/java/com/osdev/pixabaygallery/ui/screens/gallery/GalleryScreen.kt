@@ -12,8 +12,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.osdev.persistence.domain.Photo
 import com.osdev.pixabaygallery.ui.dialogs.PhotoDetailsDialog
+import com.osdev.pixabaygallery.ui.views.EmptyStateScreen
 import com.osdev.pixabaygallery.ui.views.GalleryGridView
 import com.osdev.pixabaygallery.ui.views.SearchView
+import com.osdev.pixabaygallery.utils.ScreenState
 
 @Composable
 fun GalleryScreen(
@@ -22,7 +24,7 @@ fun GalleryScreen(
 ) {
     GalleryContent(
         query = viewModel.searchQueryLiveData.observeAsState("").value,
-        photos = viewModel.photoLiveData.observeAsState(emptyList()).value,
+        screenState = viewModel.photoLiveData.observeAsState(ScreenState.Content(emptyList())).value,
         isNextPageAvailable = viewModel.isNextPageAvailableLiveData.observeAsState(true).value,
         onSearchClick = viewModel::onSearchClick,
         getNextPage = viewModel::getNextPage,
@@ -40,7 +42,7 @@ fun GalleryScreen(
 private fun GalleryContent(
     query: String,
     onSearchClick: (String) -> Unit,
-    photos: List<Photo>,
+    screenState: ScreenState<List<Photo>>,
     getNextPage: () -> Unit,
     isNextPageAvailable: Boolean,
     onPhotoClicked: (Photo) -> Unit
@@ -54,14 +56,27 @@ private fun GalleryContent(
             query = query,
             onSearchClick = onSearchClick
         )
-        GalleryGridView(
-            photos = photos,
-            onLastItemVisible = {
-                getNextPage()
-            },
-            isNextPageAvailable = isNextPageAvailable,
-            onPhotoClicked = onPhotoClicked
-        )
+        when (screenState) {
+            is ScreenState.Content -> {
+                GalleryGridView(
+                    photos = screenState.content,
+                    onLastItemVisible = {
+                        getNextPage()
+                    },
+                    isNextPageAvailable = isNextPageAvailable,
+                    onPhotoClicked = onPhotoClicked
+                )
+            }
+
+            ScreenState.Loading -> Unit //we don't have to handle loading state here, list is doing it by itself
+            is ScreenState.Error -> {
+
+            }
+
+            ScreenState.EmptyState -> {
+                EmptyStateScreen()
+            }
+        }
     }
 }
 
@@ -71,7 +86,7 @@ fun GalleryScreenPreview() {
     GalleryContent(
         query = "fruits",
         onSearchClick = {},
-        photos = emptyList(),
+        screenState = ScreenState.Content(emptyList()),
         getNextPage = {},
         isNextPageAvailable = false,
         onPhotoClicked = {}
