@@ -15,11 +15,19 @@ class PixabayRepositoryImpl @Inject constructor(
 ) : PixabayRepository {
 
     override suspend fun getPhotosByQuery(query: String, page: Int): Result<PhotosListResponse> {
-        return pixabayService.getPhotos(query, page).mapToResults()
+        return try {
+            pixabayService.getPhotos(query, page).mapToResults()
+        } catch (exception: Exception) {
+            Result.failure(NoInternetConnectionException())
+        }
     }
 
     override suspend fun getPhotoById(photoId: Int): Result<PhotosListResponse> {
-        return pixabayService.getPhotoById(photoId).mapToResults()
+        return try {
+            pixabayService.getPhotoById(photoId).mapToResults()
+        } catch (exception: Exception) {
+            Result.failure(NoInternetConnectionException())
+        }
     }
 }
 

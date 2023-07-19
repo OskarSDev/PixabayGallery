@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -29,6 +30,7 @@ import com.osdev.persistence.tagsAsHashTags
 import com.osdev.pixabaygallery.R
 import com.osdev.pixabaygallery.ui.views.CircularProgressScreen
 import com.osdev.pixabaygallery.ui.views.EmptyStateScreen
+import com.osdev.pixabaygallery.ui.views.ErrorStateScreen
 import com.osdev.pixabaygallery.ui.views.PhotoCounterInfoView
 import com.osdev.pixabaygallery.utils.ScreenState
 
@@ -48,6 +50,7 @@ fun PhotoDetailsContent(
         ScreenState.Loading -> {
             CircularProgressScreen()
         }
+
         is ScreenState.Content -> {
             val photoDetails = screenState.content
             Column(modifier = Modifier.padding(16.dp)) {
@@ -64,11 +67,12 @@ fun PhotoDetailsContent(
                 Text(
                     text = photoDetails.userName,
                     style = MaterialTheme.typography.displayLarge
-                    )
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = photoDetails.tags.tagsAsHashTags(),
-                    style = MaterialTheme.typography.displaySmall)
+                    style = MaterialTheme.typography.displaySmall
+                )
                 Spacer(modifier = Modifier.height(32.dp))
                 Row(
                     modifier = Modifier
@@ -93,8 +97,12 @@ fun PhotoDetailsContent(
         }
 
         is ScreenState.Error -> {
-
+            ErrorStateScreen(
+                errorText = screenState.exception.message
+                    ?: stringResource(id = R.string.default_error_text)
+            )
         }
+
         ScreenState.EmptyState -> {
             EmptyStateScreen()
         }

@@ -6,13 +6,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.osdev.persistence.domain.Photo
+import com.osdev.pixabaygallery.R
 import com.osdev.pixabaygallery.ui.dialogs.PhotoDetailsDialog
 import com.osdev.pixabaygallery.ui.views.EmptyStateScreen
+import com.osdev.pixabaygallery.ui.views.ErrorStateScreen
 import com.osdev.pixabaygallery.ui.views.GalleryGridView
 import com.osdev.pixabaygallery.ui.views.SearchView
 import com.osdev.pixabaygallery.utils.ScreenState
@@ -70,7 +73,10 @@ private fun GalleryContent(
 
             ScreenState.Loading -> Unit //we don't have to handle loading state here, list is doing it by itself
             is ScreenState.Error -> {
-
+                ErrorStateScreen(
+                    errorText = screenState.exception.message
+                        ?: stringResource(id = R.string.default_error_text)
+                )
             }
 
             ScreenState.EmptyState -> {
