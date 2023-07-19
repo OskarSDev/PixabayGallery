@@ -34,7 +34,7 @@ import com.osdev.pixabaygallery.R
 fun SearchView(
     modifier: Modifier,
     query: String,
-    onSearchClick:(String) -> Unit
+    onSearchClick: (String) -> Unit
 ) {
     var queryValue by rememberSaveable {
         mutableStateOf(query)
@@ -45,7 +45,7 @@ fun SearchView(
         onValueChange = {
             queryValue = it
         },
-        label = {Text(stringResource(id = R.string.search))},
+        label = { Text(stringResource(id = R.string.search)) },
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(32.dp),
         textStyle = MaterialTheme.typography.bodyMedium,
@@ -92,4 +92,9 @@ fun SearchView(
 @Preview
 @Composable
 fun SearchViewPreview() {
+    SearchView(
+        modifier = Modifier,
+        query = "fruits",
+        onSearchClick = {}
+    )
 }
