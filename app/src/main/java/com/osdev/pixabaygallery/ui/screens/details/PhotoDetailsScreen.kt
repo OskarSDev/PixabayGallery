@@ -16,6 +16,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,10 +30,14 @@ import com.osdev.pixabaygallery.ui.views.CircularProgressScreen
 import com.osdev.pixabaygallery.ui.views.EmptyStateScreen
 import com.osdev.pixabaygallery.ui.views.ErrorStateScreen
 import com.osdev.pixabaygallery.ui.views.PhotoCounterInfoView
+import com.osdev.pixabaygallery.utils.OnStartDisposableEffect
 import com.osdev.pixabaygallery.utils.ScreenState
 
 @Composable
 fun PhotoDetailsScreen(viewModel: PhotoDetailsViewModel = hiltViewModel()) {
+    OnStartDisposableEffect(LocalLifecycleOwner.current) {
+        viewModel.getPhoto()
+    }
     PhotoDetailsContent(
         screenState = viewModel.photoDetailsLiveData.observeAsState(ScreenState.Loading).value
     )
@@ -41,7 +46,7 @@ fun PhotoDetailsScreen(viewModel: PhotoDetailsViewModel = hiltViewModel()) {
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PhotoDetailsContent(
-    screenState: ScreenState<PhotoDetails>
+    screenState: ScreenState<PhotoDetails>,
 ) {
     when (screenState) {
         ScreenState.Loading -> {
