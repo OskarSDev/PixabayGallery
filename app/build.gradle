@@ -38,6 +38,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.4.8'
     }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -50,6 +55,7 @@ dependencies {
     implementation "androidx.compose.ui:ui:$libVersions.compose"
     implementation "androidx.compose.ui:ui-graphics:$libVersions.compose"
     implementation "androidx.compose.ui:ui-tooling-preview:$libVersions.compose"
+
     debugImplementation "androidx.compose.ui:ui-tooling:$libVersions.compose"
     implementation "androidx.compose.runtime:runtime-livedata:$libVersions.compose"
     implementation "androidx.compose.material3:material3:$libVersions.compose_material3"
@@ -60,6 +66,16 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:$libVersions.hilt_navigation")
 
     implementation "com.github.bumptech.glide:compose:$libVersions.glide_compose"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.2"
+    testImplementation "org.mockito:mockito-inline:4.0.0"
+    testImplementation "org.mockito:mockito-core:4.2.0"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2"
+
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
 
     testImplementation "junit:junit:$testLibVersions.j_unit"
     androidTestImplementation "androidx.test.ext:junit:$testLibVersions.androidx_junit"

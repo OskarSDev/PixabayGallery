@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,23 +19,27 @@ import com.osdev.pixabaygallery.ui.views.EmptyStateScreen
 import com.osdev.pixabaygallery.ui.views.ErrorStateScreen
 import com.osdev.pixabaygallery.ui.views.GalleryGridView
 import com.osdev.pixabaygallery.ui.views.SearchView
+import com.osdev.pixabaygallery.utils.OnStartDisposableEffect
 import com.osdev.pixabaygallery.utils.ScreenState
-import java.lang.Exception
 
 @Composable
 fun GalleryScreen(
     navController: NavController,
-    viewModel: GalleryViewModel = hiltViewModel()
+    viewModel: GalleryViewModel = hiltViewModel(),
 ) {
+    OnStartDisposableEffect(lifecycleOwner = LocalLifecycleOwner.current) {
+        viewModel.getPhotosByQuery()
+    }
+    val state = viewModel.galleryScreenStateLiveData.observeAsState(GalleryScreenState()).value
     GalleryContent(
-        query = viewModel.searchQueryLiveData.observeAsState("").value,
-        screenState = viewModel.photoLiveData.observeAsState(ScreenState.Content(emptyList())).value,
-        isNextPageAvailable = viewModel.isNextPageAvailableLiveData.observeAsState(true).value,
+        query = state.searchQuery,
+        screenState = state.contentScreenState,
+        isNextPageAvailable = state.isNextPageAvailable,
         onSearchClick = viewModel::onSearchClick,
         getNextPage = viewModel::getNextPage,
         onPhotoClicked = viewModel::onPhotoClicked
     )
-    if (viewModel.photoDetailDialogLiveData.observeAsState().value != null) {
+    if (state.photoDetails != null) {
         PhotoDetailsDialog(
             onDismiss = viewModel::hidePhotoDetailDialog,
             onAccept = { viewModel.openPhotoDetailsScreen(navController) }
@@ -49,7 +54,7 @@ private fun GalleryContent(
     screenState: ScreenState<List<Photo>>,
     getNextPage: () -> Unit,
     isNextPageAvailable: Boolean,
-    onPhotoClicked: (Photo) -> Unit
+    onPhotoClicked: (Photo) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
